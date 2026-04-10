@@ -323,8 +323,18 @@
         });
 
         // ── Configuration ──
-        // Update this URL after deploying Modal
         const CHECKOUT_API_URL = 'https://agm-pro--claude-orchestrator-launchpad-checkout.modal.run';
+
+        // ── Pre-fill from URL params (Automation Score funnel passes contact data) ──
+        const urlParams = new URLSearchParams(window.location.search);
+        const agmContactId = urlParams.get('agm_contact_id') || '';
+        if (urlParams.get('name')) document.getElementById('contact_name').value = urlParams.get('name');
+        if (urlParams.get('email')) document.getElementById('contact_email').value = urlParams.get('email');
+        if (urlParams.get('phone')) document.getElementById('contact_phone').value = urlParams.get('phone');
+        if (urlParams.get('company')) document.getElementById('business_name').value = urlParams.get('company');
+        if (urlParams.get('city')) document.getElementById('city').value = urlParams.get('city');
+        if (urlParams.get('state')) document.getElementById('state').value = urlParams.get('state');
+        if (urlParams.get('industry')) document.getElementById('industry').value = urlParams.get('industry');
 
         // ── Form submission ──
         const form = document.getElementById('intake-form');
@@ -346,6 +356,7 @@
                 state: document.getElementById('state').value,
                 industry: document.getElementById('industry').value,
                 referral_source: document.getElementById('referral_source').value,
+                agm_contact_id: agmContactId,
             };
 
             try {
