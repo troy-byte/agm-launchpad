@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGM Pro Tools — Setting Up Your Account</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --bg: #050a15;
+            --card-bg: #0d1425;
+            --card-border: #1a2744;
+            --text: #e8edf5;
+            --text-muted: #7a8ba8;
+            --accent: #22c55e;
+            --accent-dim: #16a34a;
+            --blue: #3b82f6;
+            --yellow: #eab308;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 520px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.5px;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+        }
+
+        .progress-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: left;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(26, 39, 68, 0.5);
+        }
+
+        .step:last-child {
+            border-bottom: none;
+        }
+
+        .step-icon {
+            flex-shrink: 0;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            margin-top: 2px;
+        }
+
+        .step-icon.pending {
+            border: 2px solid #1a2744;
+            color: #1a2744;
+        }
+
+        .step-icon.active {
+            border: 2px solid var(--yellow);
+            color: var(--yellow);
+            animation: pulse 1.5s infinite;
+        }
+
+        .step-icon.done {
+            background: var(--accent);
+            color: #050a15;
+            border: none;
+        }
+
+        .step-icon.action {
+            background: var(--blue);
+            color: white;
+            border: none;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .step.inactive .step-label {
+            color: #4a5a74;
+        }
+
+        .step-detail {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .oauth-btn {
+            display: inline-block;
+            margin-top: 0.5rem;
+            padding: 0.6rem 1.5rem;
+            background: var(--blue);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .oauth-btn:hover {
+            background: #2563eb;
+        }
+
+        .dashboard-btn {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 0.75rem 2rem;
+            background: var(--accent);
+            color: #050a15;
+            border: none;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .dashboard-btn:hover {
+            background: var(--accent-dim);
+        }
+
+        .complete-section {
+            text-align: center;
+            margin-top: 1.5rem;
+            display: none;
+        }
+
+        .complete-section.visible {
+            display: block;
+        }
+
+        .complete-section h2 {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .error-section {
+            text-align: center;
+            margin-top: 1rem;
+            color: #ef4444;
+            font-size: 0.85rem;
+            display: none;
+        }
+
+        .error-section.visible {
+            display: block;
+        }
+
+        .footer-note {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">AGM PRO TOOLS</div>
+        <h1 id="main-heading">Setting up your account...</h1>
+        <p class="subtitle" id="main-subtitle">This usually takes less than 10 minutes. You can stay on this page or come back later.</p>
+
+        <div class="progress-card">
+            <div class="step" id="step-setup">
+                <div class="step-icon active" id="icon-setup">&#8943;</div>
+                <div class="step-content">
+                    <div class="step-label">Creating your AGM account</div>
+                    <div class="step-detail">Sub-account, pipeline, and automation templates</div>
+                </div>
+            </div>
+
+            <div class="step inactive" id="step-oauth">
+                <div class="step-icon pending" id="icon-oauth">2</div>
+                <div class="step-content">
+                    <div class="step-label">Connect your Jobber account</div>
+                    <div class="step-detail" id="detail-oauth">Waiting for account setup to complete</div>
+                    <div id="oauth-button-container" style="display:none">
+                        <a class="oauth-btn" id="oauth-link" href="#" target="_blank">Connect Jobber &rarr;</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step inactive" id="step-configure">
+                <div class="step-icon pending" id="icon-configure">3</div>
+                <div class="step-content">
+                    <div class="step-label">Configuring your integration</div>
+                    <div class="step-detail">Webhooks, sync engine, and dashboard</div>
+                </div>
+            </div>
+
+            <div class="step inactive" id="step-live">
+                <div class="step-icon pending" id="icon-live">4</div>
+                <div class="step-content">
+                    <div class="step-label">You're all set!</div>
+                    <div class="step-detail">Dashboard and sync engine operational</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="complete-section" id="complete-section">
+            <h2>You're all set!</h2>
+            <p class="subtitle">Your AGM Pro Tools account is fully operational.</p>
+            <a class="dashboard-btn" id="dashboard-link" href="#">Open Your Dashboard &rarr;</a>
+        </div>
+
+        <div class="error-section" id="error-section">
+            <p id="error-message">Something went wrong. Please contact support@agmprotools.com</p>
+        </div>
+
+        <p class="footer-note">Questions? Email <a href="mailto:support@agmprotools.com" style="color: var(--blue)">support@agmprotools.com</a></p>
+    </div>
+
+    <script>
+        // ── Config ──
+        const STATUS_API_URL = 'https://agm-pro--claude-orchestrator-franchise-signup-status.modal.run';
+        const POLL_INTERVAL = 5000; // 5 seconds
+
+        // Get session_id from URL params (Stripe appends it)
+        const params = new URLSearchParams(window.location.search);
+        const sessionId = params.get('session_id');
+
+        // ── DOM refs ──
+        const mainHeading = document.getElementById('main-heading');
+        const mainSubtitle = document.getElementById('main-subtitle');
+        const steps = {
+            setup:     { step: document.getElementById('step-setup'),     icon: document.getElementById('icon-setup') },
+            oauth:     { step: document.getElementById('step-oauth'),     icon: document.getElementById('icon-oauth') },
+            configure: { step: document.getElementById('step-configure'), icon: document.getElementById('icon-configure') },
+            live:      { step: document.getElementById('step-live'),      icon: document.getElementById('icon-live') },
+        };
+        const oauthContainer = document.getElementById('oauth-button-container');
+        const oauthLink = document.getElementById('oauth-link');
+        const oauthDetail = document.getElementById('detail-oauth');
+        const completeSection = document.getElementById('complete-section');
+        const dashboardLink = document.getElementById('dashboard-link');
+        const errorSection = document.getElementById('error-section');
+        const errorMessage = document.getElementById('error-message');
+
+        // ── Step state mapping ──
+        // Pipeline steps 1-4 = setup, step 5 = oauth ready, step 6 = oauth done,
+        // steps 7-9 = configuring, steps 10-12 = complete
+        function mapPipelineStep(currentStep) {
+            if (!currentStep || currentStep <= 4) return 'setup';
+            if (currentStep === 5) return 'oauth_ready';
+            if (currentStep === 6) return 'oauth_done';
+            if (currentStep <= 9) return 'configure';
+            return 'complete';
+        }
+
+        function setStepDone(key) {
+            steps[key].step.classList.remove('inactive');
+            steps[key].icon.className = 'step-icon done';
+            steps[key].icon.innerHTML = '&#10003;';
+        }
+
+        function setStepActive(key) {
+            steps[key].step.classList.remove('inactive');
+            steps[key].icon.className = 'step-icon active';
+            steps[key].icon.innerHTML = '&#8943;';
+        }
+
+        function setStepAction(key) {
+            steps[key].step.classList.remove('inactive');
+            steps[key].icon.className = 'step-icon action';
+            steps[key].icon.innerHTML = '!';
+        }
+
+        function updateUI(data) {
+            const status = data.status;
+            const step = data.current_step || 0;
+            const phase = mapPipelineStep(step);
+
+            // Setup phase
+            if (phase === 'setup') {
+                setStepActive('setup');
+            }
+
+            // OAuth ready — show the button
+            if (phase === 'oauth_ready' || status === 'waiting_for_oauth') {
+                setStepDone('setup');
+                setStepAction('oauth');
+                oauthDetail.textContent = 'Click below to authorize your Jobber account';
+                if (data.oauth_url) {
+                    oauthLink.href = data.oauth_url;
+                    oauthContainer.style.display = 'block';
+                }
+                mainHeading.textContent = 'Connect your Jobber account';
+                mainSubtitle.textContent = 'Your AGM account is ready. One more step to go.';
+            }
+
+            // OAuth done, configuring
+            if (phase === 'oauth_done' || phase === 'configure') {
+                setStepDone('setup');
+                setStepDone('oauth');
+                oauthContainer.style.display = 'none';
+                oauthDetail.textContent = 'Connected';
+                setStepActive('configure');
+                mainHeading.textContent = 'Configuring your integration...';
+                mainSubtitle.textContent = 'Almost there. Setting up webhooks and your dashboard.';
+            }
+
+            // Complete
+            if (phase === 'complete' || status === 'complete') {
+                setStepDone('setup');
+                setStepDone('oauth');
+                oauthContainer.style.display = 'none';
+                oauthDetail.textContent = 'Connected';
+                setStepDone('configure');
+                setStepDone('live');
+                mainHeading.textContent = 'You\'re all set!';
+                mainSubtitle.textContent = 'Your AGM Pro Tools account is fully operational.';
+                completeSection.classList.add('visible');
+
+                if (data.dashboard_url) {
+                    dashboardLink.href = data.dashboard_url;
+                }
+
+                clearInterval(pollTimer);
+            }
+
+            // Error
+            if (status === 'error' || status === 'pipeline_error') {
+                errorSection.classList.add('visible');
+                errorMessage.textContent = data.error || 'Something went wrong. Please contact support@agmprotools.com';
+                clearInterval(pollTimer);
+            }
+        }
+
+        // ── Polling ──
+        let pollTimer = null;
+        let pollCount = 0;
+        const MAX_POLLS = 120; // 10 minutes at 5s intervals
+
+        async function pollStatus() {
+            if (!sessionId) {
+                // No session ID — show generic success
+                mainHeading.textContent = 'Thank you!';
+                mainSubtitle.textContent = 'Your account is being set up. Check your email for next steps.';
+                return;
+            }
+
+            pollCount++;
+            if (pollCount > MAX_POLLS) {
+                clearInterval(pollTimer);
+                mainSubtitle.textContent = 'This is taking longer than expected. Check your email or contact support.';
+                return;
+            }
+
+            try {
+                const resp = await fetch(`${STATUS_API_URL}?session_id=${sessionId}`);
+                if (!resp.ok) {
+                    // Might not have a status yet (pipeline hasn't started)
+                    if (pollCount > 6) { // 30 seconds grace period
+                        console.warn('Status check failed:', resp.status);
+                    }
+                    return;
+                }
+                const data = await resp.json();
+                updateUI(data);
+            } catch (err) {
+                console.warn('Poll error:', err);
+            }
+        }
+
+        // Start polling
+        if (sessionId) {
+            pollStatus(); // immediate first check
+            pollTimer = setInterval(pollStatus, POLL_INTERVAL);
+        } else {
+            mainHeading.textContent = 'Thank you!';
+            mainSubtitle.textContent = 'Your account is being set up. Check your email for next steps.';
+        }
+    </script>
+</body>
+</html>
